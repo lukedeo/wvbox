@@ -71,6 +71,7 @@ class WVBox(object):
 
         self._tokenizer = tokenizer
 
+
     def builtmethod(f):
         def wrapper(*args, **kwargs):
             if not args[0]._built:
@@ -80,6 +81,16 @@ class WVBox(object):
                 )
             return f(*args, **kwargs)
         return wrapper
+
+    @property
+    @builtmethod
+    def wv_size(self):
+        return self.W.shape[1]
+
+    @property
+    @builtmethod
+    def vocab_size(self):
+        return self.W.shape[0]
 
 
     def load_vectors(self, vector_file):
