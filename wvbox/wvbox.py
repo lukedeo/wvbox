@@ -11,7 +11,6 @@ import logging
 
 import numpy as np
 
-from .process import parse_tokens
 
 LOGGER_PREFIX = ' %s'
 logging.basicConfig(level=logging.INFO)
@@ -41,7 +40,7 @@ class WVBox(object):
     the dog likes his owner
     this is an interesting finding
     '''
-    def __init__(self, vector_file=None, verbose=True, tokenizer=parse_tokens):
+    def __init__(self, vector_file=None, tokenizer=None, verbose=True):
         ''' 
         Ctor for word vector container class.
         
@@ -67,10 +66,12 @@ class WVBox(object):
 
         self._w2i = {}
         self._i2w = {}
-
+        
+        if tokenizer is None:
+            from .process import parse_tokens
+            tokenizer = parse_tokens
 
         self._tokenizer = tokenizer
-
 
     def builtmethod(f):
         def wrapper(*args, **kwargs):
